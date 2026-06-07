@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Referências | 4S Store</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/public/favicon.png" type="image/png">
+<link rel="stylesheet" href="style.css">
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<style>
+/* SEU CSS ORIGINAL FOI MANTIDO */
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+font-family:system-ui,-apple-system,Segoe UI,Roboto;
+background:
+radial-gradient(circle at top,#000000,#000000 70%);
+color:#ffffff;
+line-height:1.5;
+}
+
+/* HEADER */
+
+header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 40px;
+
+background:rgba(0, 0, 0, 0.85);
+backdrop-filter:blur(10px);
+
+border-bottom:1px solid rgba(30, 143, 255, 0);
+
+box-shadow:
+0 0 30px rgba(30, 143, 255, 0);
+}
+
+header h1{
+font-size:20px;
+letter-spacing:.5px;
+color:#D16812;
+}
+
+header a {
+  padding: 4px 8px;
+  font-size: 16px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #D16812, #facc15);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(209,104,18,0.5);
+  transition: all 0.3s ease;
+}
+
+header a:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 25px rgba(209,104,18,0.7), 0 0 12px rgba(250,204,21,0.6);
+}
+
+/* MAIN */
+
+main{
+max-width:950px;
+margin:80px auto;
+padding:30px;
+}
+
+/* COUNTER */
+
+#counter{
+  text-align:center;
+  margin-bottom:15px;
+}
+
+#counterNumber{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap:8px;          /* espaço entre GIF e número */
+  font-size:50px;   /* tamanho do número */
+  font-weight:700;
+  color:#d3bf10;
+  text-shadow:
+    0 0 10px #D16812,
+    0 0 20px #D16812,
+    0 0 30px #D16812,
+    0 0 40px #D16812;
+  animation:counterGlow 1.5s infinite alternate;
+}
+
+#counterNumber img{
+  height:50px;
+  width:50px;
+}
+
+@keyframes counterGlow{
+  30%{
+    text-shadow:
+      0 0 8px #D16812,
+      0 0 16px #D16812,
+      0 0 24px #D16812;
+  }
+  100%{
+    text-shadow:
+      0 0 12px #D16812,
+      0 0 28px #D16812,
+      0 0 40px #D16812,
+      0 0 60px #D16812;
+  }
+}
+
+#counter small{
+  display:block;
+  margin-top:4px;
+  font-size:16px;
+  opacity:.7;
+  color:#ffffff;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  text-shadow:0 0 6px #ffffff;
+}
+
+@media (max-width:600px){
+  #counterNumber{
+    font-size:40px;
+  }
+  #counterNumber img{
+    height:40px;
+    width:40px;
+  }
+}
+
+
+/* CARD */
+
+.card{
+
+background:rgba(0, 0, 0, 0.63);
+
+backdrop-filter:blur(12px);
+
+border-radius:24px;
+
+padding:32px;
+
+height:260px;
+
+display:flex;
+flex-direction:column;
+
+border:1px solid #D16812;
+
+box-shadow:
+    0 6px 20px rgba(209,104,18,0.5),
+    0 0 12px rgba(209,104,18,0.4);
+}
+
+.card:hover{
+
+transform:translateY(-6px) scale(1.02);
+
+box-shadow:
+    0 0 20px rgba(209,104,18,0.4),
+    0 12px 30px rgba(0,0,0,0.6);
+}
+
+.ref-header{
+display:flex;
+gap:12px;
+align-items:center;
+margin-bottom:12px;
+}
+
+.ref-header img{
+width:80px;
+height:80px;
+}
+
+.ref-header strong{
+font-size:16px;
+color:#ffffff;
+
+text-shadow:
+0 0 8px #D16812;
+}
+
+.ref-header span{
+font-size:13px;
+color:#ffffff;
+opacity:.8;
+}
+
+.ref-text{
+margin-top:10px;
+opacity:.9;
+overflow-wrap:anywhere;
+word-break:break-word;
+}
+
+/* GALERIA */
+
+#proofCarouselImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 18px;
+    transition: transform .35s ease, opacity .5s ease-in-out;
+    display: block;
+    opacity: 0;
+}
+
+#proofCarouselImage.active {
+    opacity:1;
+    transform: scale(1.02);
+}
+
+#proofCarouselImage:hover {
+    transform: scale(1.03);
+    box-shadow:0 0 35px rgba(5, 9, 255, 0.041),0 20px 50px rgba(0,0,0,.9);
+}
+/* Container com perspectiva 3D */
+#slider-wrapper{
+  position:relative;
+  min-height:260px;
+  margin-bottom:40px;
+  perspective:1200px;
+}
+
+/* FORM */
+
+form{
+margin-top:40px;
+
+background:
+linear-gradient(
+180deg,
+rgb(0, 0, 0),
+rgb(0, 0, 0)
+);
+
+padding:32px;
+
+border-radius:22px;
+
+border:1px solid #D16812;
+
+box-shadow:
+0 0 25px#D16812,
+0 20px 45px rgb(0, 0, 0);
+}
+
+input,textarea{
+
+width:100%;
+
+padding:14px 16px;
+
+margin-bottom:14px;
+
+border-radius:12px;
+
+border:1px solid #D16812;
+
+background:rgb(0, 0, 0);
+
+color:#e6edf3;
+
+transition:.2s;
+}
+
+input:focus,
+textarea:focus{
+
+outline:none;
+
+border-color:#D16812;
+
+box-shadow:
+0 0 10px #D16812;
+}
+
+textarea{
+resize:none;
+min-height:90px;
+}
+
+/* BOTÃO */
+
+button{
+
+width:100%;
+
+padding:15px;
+
+border:none;
+
+border-radius:16px;
+
+background:linear-gradient(
+135deg,
+#D16812,
+#d1681294
+);
+
+color:white;
+
+font-weight:600;
+
+letter-spacing:.3px;
+
+cursor:pointer;
+
+transition:.25s;
+}
+
+button:hover{
+
+transform:translateY(-2px);
+
+box-shadow:
+0 0 20px #D16812;
+}
+
+/* MENSAGENS */
+
+.success{
+color:#0bffaa;
+text-align:center;
+display:none;
+margin-top:10px;
+}
+
+/* ERRO */
+
+.error{
+
+color:#ff2b2b;
+text-align:center;
+margin-top:10px;
+
+animation:errorGlow 1.2s infinite alternate;
+
+}
+
+/* SUCESSO */
+
+.success{
+
+color:#00ffa6;
+text-align:center;
+margin-top:10px;
+
+animation:successGlow 1.2s infinite alternate;
+
+}
+
+/* animação erro */
+
+@keyframes errorGlow{
+
+0%{
+
+opacity:.7;
+
+text-shadow:
+0 0 4px rgba(212, 18, 18, 0.4);
+
+}
+
+100%{
+
+opacity:1;
+
+text-shadow:
+0 0 10px rgba(255,0,0,.9),
+0 0 18px rgba(255,0,0,.6);
+
+}
+
+}
+
+/* animação sucesso */
+
+@keyframes successGlow{
+
+0%{
+
+opacity:.7;
+
+text-shadow:
+0 0 4px rgba(0,255,150,.4);
+
+}
+
+100%{
+
+opacity:1;
+
+text-shadow:
+0 0 10px rgba(0,255,150,.9),
+0 0 18px rgba(0,255,150,.6);
+
+}
+
+}
+.badge{
+
+margin-left:8px;
+
+font-size:12px;
+
+padding:4px 10px;
+
+border-radius:10px;
+
+background:#d1681200;
+
+border:1px solid rgba(37, 120, 204, 0);
+
+color:#1e8fff00;
+
+font-weight:600;
+
+letter-spacing:.3px;
+
+
+}
+
+.nick{
+
+font-size:13px;
+
+color:#D16812;
+
+opacity:.8;
+
+}
+
+.avatar{
+width:80px;
+height:80px;
+object-fit:cover;
+
+}
+@keyframes fadeCard{
+
+from{
+opacity:0;
+transform:translateY(10px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+/* ALERTA AMARELO PULSANTE */
+
+.alert{
+
+font-size:12px;
+margin-top:4px;
+
+color:#FFD700; /* amarelo ouro */
+
+animation:alertGlow 1.2s infinite alternate;
+
+}
+
+/* animação glow amarelo */
+
+@keyframes alertGlow{
+
+0%{
+opacity:.7;
+text-shadow:
+0 0 4px rgba(255,215,0,.4); /* glow leve */
+}
+
+100%{
+opacity:1;
+text-shadow:
+0 0 8px rgba(255,215,0,.9),
+0 0 15px rgba(255,215,0,.6); /* glow intenso */
+}
+
+}
+
+#charCount{
+
+font-size:12px;
+opacity:.7;
+
+}
+.proof-container {
+  width: 100%;
+  max-width: 900px;
+  aspect-ratio: 16/9; /* mantém proporção */
+  margin: 0 auto 40px auto;
+  overflow: hidden;
+  border-radius: 18px;
+
+  /* BORDA + GLOW */
+  border: 1px solid #D16812;   /* borda laranja */
+  box-shadow: 0 0 12px #D1681266; /* glow sutil */
+}
+
+@media (max-width: 768px){
+
+  header a {
+    padding: 6px 10px;   /* 🔥 menor */
+    font-size: 12px;     /* 🔥 texto menor */
+    border-radius: 10px; /* opcional */
+  }
+
+}
+
+
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>🌝 Deixe sua Referencia</h1>
+<a href="https://4sstore.vercel.app/">🏠Início</a>
+</header>
+
+<main>
+
+
+</div>
+
+<!-- CONTADOR -->
+<div id="counter">
+  <div id="counterNumber"></div>
+  <small>Referências</small>
+</div>
+<!-- SLIDER -->
+<div id="slider-wrapper">
+<div id="slider"></div>
+</div>
+<!-- GALERIA FIXA -->
+<div class="proof-container">
+  <img id="proofCarouselImage" src="">
+</div>
+  
+
+<script>
+const proofFolder="/public/provas/";
+
+const proofFiles=[
+  "Simarillion Keeper.gif",
+  "joker.gif",
+  "L.gif",
+  "Grand General.gif",
+  "Abigali.gif",
+  "Oshaa.gif",
+  "Papa Sisto.gif",
+  "Papa Sisto2.gif",
+];
+
+const proofImages=proofFiles.map(f=>proofFolder+f);
+let proofIndex=0;
+
+const proofImg=document.getElementById("proofCarouselImage");
+
+function updateProof(){
+  // fade-out
+  proofImg.classList.remove("active");
+  setTimeout(()=>{
+    proofImg.src=proofImages[proofIndex];
+    proofImg.classList.add("active"); // fade-in
+  },200);
+}
+
+// Inicializa
+proofImg.src = proofImages[proofIndex];
+proofImg.classList.add("active");
+
+// Troca automática a cada 4s
+setInterval(()=>{
+  proofIndex=(proofIndex+1)%proofImages.length;
+  updateProof();
+},4000);
+
+// Troca ao clicar
+proofImg.onclick = ()=>{
+  proofIndex=(proofIndex+1)%proofImages.length;
+  updateProof();
+}
+</script>
+<!-- FORM -->
+<form id="form" class="ref-form">
+
+<h2>⭐ Enviar Referência</h2>
+
+<div class="form-group">
+<label>Nome</label>
+<input id="fullname" placeholder="Ex: João Silva" required>
+</div>
+
+<div class="form-group">
+<label>Nickname</label>
+<input id="nickname" placeholder="Ex: Player123" required>
+<small id="nickAlert" class="alert"></small>
+</div>
+
+<div class="form-group">
+<label>Email</label>
+<input id="email" type="email" placeholder="Ex: email@gmail.com" required>
+<small id="emailAlert" class="alert"></small>
+</div>
+
+<div class="form-group">
+<label>Sua referência</label>
+<textarea id="message" maxlength="300" placeholder="Conte como foi sua experiência comprando na 4S Store..." required></textarea>
+<small id="charCount">0 / 300</small>
+</div>
+
+<button type="submit">Enviar referência</button>
+
+<div id="success" class="success">✔ Referência enviada!</div>
+<div id="error" class="error"></div>
+
+</form>
+</main>
+
+<script>
+
+firebase.initializeApp({
+apiKey:"AIzaSyBGeptReBViZ9CQoJ2G18SmnaxbnvO3kDw",
+authDomain:"referenciasjogadores.firebaseapp.com",
+projectId:"referenciasjogadores"
+});
+
+const db = firebase.firestore();
+
+let refs=[];
+let index=0;
+
+const slider=document.getElementById("slider");
+const counterNumber=document.getElementById("counterNumber");
+
+function render() {
+  if (!refs.length) return;
+
+  const r = refs[index];
+
+  // Lista de avatares
+  const avatars = [
+    "https://cdn3.emoji.gg/emojis/95065-metal-slug-thanks.gif",
+  
+  ];
+
+  // Escolhe um avatar aleatório
+  const avatar = avatars[Math.floor(Math.random() * avatars.length)];
+
+  slider.innerHTML = `
+    <div class="card">
+      <div class="ref-header">
+        <img class="avatar" src="${avatar}">
+        <div>
+          <strong>
+            ${r.fullname}
+            <span class="badge">💎Cliente</span>
+          </strong>
+          <br>
+          <span class="nick">#${r.nickname}</span>
+        </div>
+      </div>
+      <div class="ref-text">
+        ${r.message}
+      </div>
+    </div>
+  `;
+}
+
+function updateCounter(total){
+
+let start = 0;
+let duration = 800; 
+let stepTime = 10;
+
+let increment = total / (duration / stepTime);
+
+const timer = setInterval(()=>{
+
+start += increment;
+
+if(start >= total){
+start = total;
+clearInterval(timer);
+}
+
+const gifURL = "https://cdn3.emoji.gg/emojis/2580-1.gif";
+
+counterNumber.innerHTML = `
+  <img src="${gifURL}" alt="Troféu" style="height:50px; width:50px;">
+  <span style="margin-left:-4px;">${Math.floor(start)}</span>
+`;
+
+}, stepTime);
+
+}
+
+db.collection("referencias")
+.orderBy("timestamp","desc")
+.onSnapshot(snapshot=>{
+
+refs=[];
+
+snapshot.forEach(doc=>{
+const data=doc.data();
+if(data.timestamp) refs.push(data);
+});
+
+updateCounter(refs.length);
+
+index=0;
+render();
+
+});
+
+setInterval(()=>{
+if(refs.length){
+index=(index+1)%refs.length;
+render();
+}
+},6000);
+slider.addEventListener("click", () => {
+
+if(refs.length > 1){
+
+index = (index + 1) % refs.length;
+
+render();
+
+}
+
+});
+const form=document.getElementById("form");
+
+form.addEventListener("submit", async e => {
+
+e.preventDefault();
+
+const fullname=document.getElementById("fullname").value.trim();
+const nickname=document.getElementById("nickname").value.trim();
+const email=document.getElementById("email").value.trim();
+const message=document.getElementById("message").value.trim();
+
+const success=document.getElementById("success");
+const error=document.getElementById("error");
+
+success.style.display="none";
+error.style.display="none";
+
+try{
+
+/* verifica email e nickname */
+const [emailCheck, nickCheck] = await Promise.all([
+
+db.collection("referencias")
+.where("email","==",email)
+.get(),
+
+db.collection("referencias")
+.where("nickname","==",nickname)
+.get()
+
+]);
+// ALERTA EMAIL
+if(!emailCheck.empty){
+
+error.textContent = "❌ Referência não enviada, informações já usadas.";
+error.style.display="block";
+return;
+
+}
+// ALERTA NICKNAME
+if(!nickCheck.empty){
+
+error.textContent = "❌ Referência não enviada, informações já usadas.";
+error.style.display="block";
+return;
+
+}
+
+/* envia referência */
+
+await db.collection("referencias").add({
+
+fullname,
+nickname,
+email,
+message,
+timestamp:firebase.firestore.FieldValue.serverTimestamp()
+
+});
+
+success.style.display="block";
+
+form.reset();
+
+}catch(err){
+
+console.error(err);
+
+error.textContent="Erro ao enviar referência.";
+error.style.display="block";
+
+}
+
+});
+</script>
+<script>
+
+/* TODO SEU JS ATUAL */
+
+form.addEventListener("submit", async e => {
+
+e.preventDefault();
+
+/* envio da referencia */
+
+});
+
+/* COLE AQUI EMBAIXO 👇 */
+
+const emailInput = document.getElementById("email");
+const nickInput = document.getElementById("nickname");
+const messageInput = document.getElementById("message");
+
+const emailAlert = document.getElementById("emailAlert");
+const nickAlert = document.getElementById("nickAlert");
+const charCount = document.getElementById("charCount");
+
+/* contador de caracteres */
+
+messageInput.addEventListener("input",()=>{
+charCount.textContent = messageInput.value.length + " / 300";
+});
+
+/* verificar email */
+
+emailInput.addEventListener("blur", async ()=>{
+
+const email = emailInput.value.trim();
+
+if(!email) return;
+
+const check = await db.collection("referencias")
+.where("email","==",email)
+.get();
+
+if(!check.empty){
+
+emailAlert.textContent="⚠ Este email já enviou uma referência.";
+
+}else{
+
+emailAlert.textContent="";
+
+}
+
+});
+
+/* verificar nickname */
+
+nickInput.addEventListener("blur", async ()=>{
+
+const nick = nickInput.value.trim();
+
+if(!nick) return;
+
+const check = await db.collection("referencias")
+.where("nickname","==",nick)
+.get();
+
+if(!check.empty){
+
+nickAlert.textContent="⚠ Este nickname já foi usado.";
+
+}else{
+
+nickAlert.textContent="";
+
+}
+
+});
+
+</script>
+</body>
+
+</html>

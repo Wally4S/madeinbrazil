@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Utilidades</title>
+
+<style>
+
+body{
+background:#000000;
+font-family:Arial;
+color:white;
+text-align:center;
+}
+
+/* TOP BAR */
+
+.topBar{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:8px;
+flex-wrap:wrap;
+margin-top:25px;
+position:relative; /* necessário pro botão direita */
+}
+/* BOTÃO "Página Inicial" (o primeiro link) */
+.topBar a:first-child{
+position:absolute;
+right:10px;
+top:-5px;
+
+padding:9px 18px;
+border-radius:20px;
+
+background:linear-gradient(135deg,#ffb347,#ff8c1a);
+color:#000;
+font-size:16px;
+font-weight:bold;
+
+box-shadow:0 0 15px rgba(255,180,80,0.8);
+}
+
+/* mantém hover bonito */
+.topBar a:first-child:hover{
+transform:scale(1.05);
+box-shadow:0 0 25px rgba(255,180,80,1);
+}
+@media (max-width:768px){
+
+.topBar{
+flex-direction:column;
+}
+
+/* botão volta pro fluxo normal no mobile */
+.topBar a:first-child{
+position:static;
+margin-bottom:10px;
+}
+
+}
+
+
+/* BOTÕES */
+.topBar a{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+gap:5px;
+
+padding:6px 14px; /* 🔥 menor */
+border-radius:20px;
+
+background:linear-gradient(135deg,#D16812,#ff8c1a);
+color:white;
+font-size:12px; /* 🔥 menor */
+font-weight:600;
+
+text-decoration:none;
+cursor:pointer;
+transition:.2s ease;
+
+white-space:nowrap; /* 🔥 evita quebrar texto */
+
+box-shadow:
+0 0 10px rgba(209,104,18,0.5),
+inset 0 0 4px rgba(255,255,255,0.1);
+}
+
+/* HOVER */
+.topBar a:hover{
+transform:translateY(-2px) scale(1.05);
+
+background:linear-gradient(135deg,#ff8c1a,#ffb347);
+
+box-shadow:
+0 0 18px rgba(255,140,26,0.8),
+0 0 30px rgba(209,104,18,0.5);
+}
+
+/* ATIVO */
+.topBar a.active{
+background:linear-gradient(135deg,#ffb347,#ffd27f);
+color:#000;
+
+box-shadow:
+0 0 20px rgba(255,180,80,1),
+0 0 40px rgba(255,140,26,0.6);
+}
+
+/* SEARCH */
+
+.search{
+margin-top:12px;
+padding:7px;
+border-radius:10px;
+border:none;
+width:220px;
+}
+
+/* GRID */
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,190px);
+gap:20px;
+justify-content:center;
+margin-top:20px;
+}
+
+/* CARD */
+
+.card{
+background:#D16812;
+border-radius:18px;
+overflow:hidden;
+width:100%;
+padding-bottom:10px;
+transition:.3s;
+position:relative;
+box-shadow:0 0 15px rgba(0,0,0,0.6);
+border:1px solid rgba(255,255,255,0.05);
+}
+
+/* HOVER */
+.card:hover{
+transform:translateY(-6px) scale(1.04);
+box-shadow:0 0 25px rgba(255, 255, 255, 0.5);
+}
+
+/* IMAGEM */
+.card img{
+width:100%;
+height:110px;
+object-fit:contain;
+background:#ffffff;
+position:relative;
+z-index:1;
+}
+
+/* OVERLAY DARK (EFEITO GAME) */
+.card::before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:110px;
+background:linear-gradient(to bottom, rgba(0,0,0,0) 40%, rgba(0,0,0,0.85));
+z-index:2;
+}
+
+/* BADGE */
+.badge{
+position:absolute;
+top:6px;
+left:6px;
+padding:3px 8px;
+font-size:11px;
+border-radius:8px;
+font-weight:bold;
+z-index:3;
+}
+
+.mvp{ background:#ff0000; }
+.mini{ background:#9333ea; }
+.function{ background:#0ea5e9; }
+
+/* INFO */
+.info{
+padding:8px;
+text-align:left;
+}
+
+/* NOME */
+.name{
+font-weight:bold;
+font-size:15px;
+color:#ffffff;
+text-shadow:0 0 8px rgba(0,0,0,0.8);
+}
+
+/* MAPA */
+.map{
+font-size:11px;
+color:#ffffff;
+}
+
+/* TIMER ESTILO HUD */
+.timer{
+margin-top:6px;
+font-size:15px;
+font-weight:bold;
+color:#86fd4f;
+text-shadow:0 0 10px rgba(250,204,21,0.6);
+}
+
+/* INPUTS */
+input{
+width:38%;
+padding:4px;
+margin-top:5px;
+border-radius:6px;
+border:none;
+text-align:center;
+background:#020617;
+color:white;
+}
+
+/* BOTÕES */
+button{
+margin-top:5px;
+padding:5px 10px;
+border:none;
+border-radius:6px;
+background:#D16812;
+color:white;
+cursor:pointer;
+transition:.2s;
+}
+
+button:hover{
+box-shadow:0 0 10px #D16812;
+}
+
+/* SPAWN PREMIUM */
+.spawned{
+background:linear-gradient(135deg,#3b0a0a,#000);
+border:1px solid red;
+}
+
+.spawnGlow{
+animation:glow 1.2s infinite;
+}
+
+@keyframes glow{
+0%{box-shadow:0 0 10px red}
+50%{box-shadow:0 0 35px red}
+100%{box-shadow:0 0 10px red}
+}
+/* PAGINAÇÃO */
+
+.pagination{
+margin-top:25px;
+}
+
+.pagination button{
+background:#D16812;
+padding:6px 14px;
+border:none;
+border-radius:8px;
+color:white;
+cursor:pointer;
+margin:5px;
+}
+
+.pagination button:hover{
+box-shadow:0 0 10px #D16812;
+}
+/* BOX DE TEMPO */
+.timeBox{
+margin-top:8px;
+display:flex;
+flex-direction:column;
+gap:6px;
+}
+
+/* INPUTS LADO A LADO */
+.timeInputs{
+display:flex;
+gap:6px;
+justify-content:center;
+}
+
+.inputGroup{
+display:flex;
+flex-direction:column;
+align-items:center;
+font-size:11px;
+color:#ffffff;
+}
+
+.inputGroup span{
+margin-bottom:2px;
+}
+
+/* INPUT ESTILO GAME */
+.inputGroup input{
+width:50px;
+padding:6px;
+border-radius:8px;
+border:none;
+text-align:center;
+background:#020617;
+color:#ffffff;
+font-weight:bold;
+box-shadow:inset 0 0 6px rgba(0,0,0,0.8);
+}
+
+/* AÇÕES */
+.actions{
+display:flex;
+gap:6px;
+justify-content:center;
+}
+
+/* BOTÃO BASE */
+.btn{
+padding:6px 10px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-size:12px;
+transition:.25s;
+}
+.search:focus{
+letter-spacing:0.5px;
+}
+/* BASE BOTÃO AAA */
+.btn{
+position:relative;
+padding:7px 12px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+font-size:12px;
+font-weight:bold;
+overflow:hidden;
+transition:.2s;
+}
+.startBtn{
+background:linear-gradient(135deg,#16a34a,#22c55e);
+color:white;
+box-shadow:0 0 12px rgba(34,197,94,0.6);
+}
+
+.startBtn:hover{
+transform:scale(1.07);
+box-shadow:0 0 22px rgba(34,197,94,1);
+}
+.resetBtn{
+background:linear-gradient(135deg,#dc2626,#ef4444);
+color:white;
+box-shadow:0 0 12px rgba(239,68,68,0.6);
+}
+
+.resetBtn:hover{
+transform:scale(1.07);
+box-shadow:0 0 22px rgba(239,68,68,1);
+}
+/* EFEITO CLIQUE REAL */
+.btn:active{
+transform:scale(0.92);
+box-shadow:inset 0 0 10px rgba(0,0,0,0.8);
+}
+
+/* SHINE ANIMADO */
+.btn::after{
+content:"";
+position:absolute;
+top:-100%;
+left:-100%;
+width:200%;
+height:200%;
+background:linear-gradient(
+120deg,
+transparent 40%,
+rgba(255,255,255,0.25) 50%,
+transparent 60%
+);
+transform:rotate(25deg);
+opacity:0;
+}
+
+.btn:hover::after{
+animation:shineBtn 1s;
+}
+
+@keyframes shineBtn{
+0%{top:-100%;left:-100%;opacity:0}
+40%{opacity:1}
+100%{top:100%;left:100%;opacity:0}
+}
+</style>
+</head>
+
+<body>
+
+<div class="topBar">
+
+<a href="https://4sstore.vercel.app/">🏠Início</a>
+
+<a href="#" onclick="setFilter('all')">🌎Todos</a>
+<a href="#" onclick="setFilter('mvp')">💀Mvp</a>
+<a href="#" onclick="setFilter('mini')">☠️Mini</a>
+<a href="#" onclick="setFilter('function')">⛏️Funções</a>
+
+</div>
+
+<div class="searchWrapper">
+  <div class="searchBox">
+    <span class="searchIcon">🔎</span>
+    <input 
+      class="search" 
+      placeholder="Buscar boss..."
+      onkeyup="searchBoss(this.value)">
+  </div>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<div class="pagination">
+
+<button onclick="prevPage()">⬅</button>
+<span id="pageInfo"></span>
+<button onclick="nextPage()">➡</button>
+
+</div>
+
+<audio id="alarm">
+<source src="../public/som.mp3">
+</audio>
+
+<script>
+ const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1483556689029370020/fyMxT9BREuDCEGYRx6NjkUPOAuK6aLylMDxAg8qjjdLFSRtR2aAZMBLa_Y8tZ2iCFSum";
+
+// 🔥 COLOQUE AQUI O ID DO CARGO MVP
+const ROLE_MVP_ID = "1483558658888695973";
+
+function getBossColor(name){
+  const colors = {
+    "Morroc": 0x8B0000,
+    "Amon Ra": 0xFFD700,
+    "Faraó": 0xC2B280,
+    "Eddga": 0xFF4500,
+    "Kraken": 0x1E90FF,
+    "Maya": 0x800080,
+    "Vigi do Tempo": 0x00CED1,
+    "Heroi Orc": 0x228B22,
+    "Doppelganger": 0x2F4F4F,
+    "Abelha Rainha": 0xFFCC00,
+    "Phreeoni": 0xDAA520
+  }
+
+  return colors[name] || 16711680 // fallback vermelho
+}
+
+function getBossColor(name){
+  const colors = {
+    "Morroc": 0x8B0000,
+    "Amon Ra": 0xFFD700,
+    "Faraó": 0xC2B280,
+    "Eddga": 0xFF4500,
+    "Kraken": 0x1E90FF,
+    "Maya": 0x800080,
+    "Vigi do Tempo": 0x00CED1,
+    "Heroi Orc": 0x228B22,
+    "Doppelganger": 0x2F4F4F,
+    "Abelha Rainha": 0xFFCC00,
+    "Phreeoni": 0xDAA520
+  }
+
+  return colors[name] || 16711680
+}
+
+function enviarDiscord(boss){
+
+  if(boss.type !== "mvp") return;
+
+  const timestamp = Math.floor(Date.now()/1000)
+
+ fetch(DISCORD_WEBHOOK + "?wait=true", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+
+    content: `<@&${ROLE_MVP_ID}>`,
+
+    username: "🔥 ALERTA MVP",
+    avatar_url: boss.img,
+
+    embeds: [{
+      title: `💀 ${boss.name}`,
+      description:
+`🚨 **SPAWN CONFIRMADO**
+
+🧠 Nasceu <t:${Math.floor(Date.now()/1000)}:R>
+⚔️ **Corra para o local imediatamente!**`,
+
+      color: getBossColor(boss.name),
+
+      fields: [
+        {
+          name: "🌍 Local",
+          value: `\`${boss.map}\``,
+          inline: true
+        },
+        {
+          name: "Status",
+          value: "`🔋Nasceu`",
+          inline: true
+        }
+      ],
+
+      image: {
+        url: boss.img
+      },
+
+      footer: {
+        text: "4S STORE • Sistema de Monitoramento MVP"
+      },
+
+      timestamp: new Date()
+    }]
+
+  })
+})
+.then(res => res.json())
+.then(data => {
+
+  const messageId = data.id
+
+  // ⏱️ APAGA EM 5 MINUTOS
+  setTimeout(() => {
+
+    fetch(`${DISCORD_WEBHOOK}/messages/${messageId}`, {
+      method: "DELETE"
+    })
+
+  }, 60000)
+
+})
+.catch(()=>{})
+
+}
+
+const alarm = document.getElementById("alarm")
+
+document.addEventListener("click", () => {
+  alarm.play().then(() => {
+    alarm.pause()
+    alarm.currentTime = 0
+  }).catch(()=>{})
+}, { once: true })
+
+Notification.requestPermission()
+
+
+const cardsPerPage=12
+let currentPage=1
+let currentFilter = localStorage.getItem("filter") || "all"
+
+function setFilter(type){
+currentFilter = type
+
+localStorage.setItem("filter", type) // 🔥 AGORA SALVA
+
+currentPage = 1
+if(!currentFilter){
+currentFilter = "all"
+}
+renderCards()
+}
+
+
+const bosses=[
+/* BOSS */
+{name:"Morroc",map:"Morroc CA1",img:"https://ragnarokonline.gungho.jp/special/fankit/assets/img/monster/mvp-monster/mob_morocc.png",type:"mvp"},
+{name:"Amon Ra",map:"Pirâmide 2ºA CA1",img:"https://ragnarokonline.gungho.jp/special/fankit/assets/img/monster/mvp-monster/mob_n_amon_ra.png",type:"mvp"},
+{name:"Faraó",map:"Caverna da Esfinge CA1",img:"https://ragnarokonline.gungho.jp/special/fankit/assets/img/monster/mvp-monster/mob_pharaoh.png",type:"mvp"},
+{name:"Eddga",map:"Foresta Leste Payon CA1",img:"https://ragnarokonline.gungho.jp/special/fankit/assets/img/monster/mvp-monster/mob_eddga.png",type:"mvp"},
+{name:"Kraken",map:"Caverna Subaquática CA1",img:"https://ragnarokonline.gungho.jp/special/fankit/assets/img/monster/mvp-monster/mob_kraken.png",type:"mvp"},
+{name:"Maya",map:"Caverna Formigueiro CA1",img:"https://ragnarokonline.gungho.jp/special/fankit/assets/img/monster/mvp-monster/mob_maya.png",type:"mvp"},
+{name:"Vigi do Tempo",map:"Torre do Relógio Pesadelo CA1",img:"https://ragnarokonline.gungho.jp/special/fankit/assets/img/monster/mvp-monster/mob_timeholder.png",type:"mvp"},
+{name:"Heroi Orc",map:"Vila Orc CA1",img:"https://ragnarokonline.gungho.jp/special/fankit/assets/img/monster/mvp-monster/mob_ork_hero.png",type:"mvp"},
+{name:"Doppelganger",map:"Geffen Masmorra 2ºA CA1",img:"https://ragnarokonline.gungho.jp/special/fankit/assets/img/monster/mvp-monster/mob_doppelganger.png",type:"mvp"},
+{name:"Abelha Rainha",map:"Montanhas Mjolnir CA1",img:"https://ragnarokonline.gungho.jp/special/fankit/assets/img/monster/mvp-monster/mob_mistress.png",type:"mvp"},
+{name:"Phreeoni",map:"Deserto de Sograt CA1",img:"https://ragnarokonline.gungho.jp/special/fankit/assets/img/monster/mvp-monster/mob_phreeoni.png",type:"mvp"},
+/* BOSS */
+{name:"Eclipse",map:"Portão Sul Prontera CA1",img:"https://ragnarokonline.gungho.jp/special/fankit/assets/img/monster/boss-general-monster/mob_eclipse.png",type:"mini"},
+{name:"Ghostring",map:"Návio do Tesouro CA1",img:"https://ragnarokonline.gungho.jp/special/fankit/assets/img/monster/boss-general-monster/111ghostring.png",type:"mini"},
+{name:"Libélula",map:"Deserto de Sograt CA1",img:"https://ragnarokonline.gungho.jp/special/fankit/assets/img/monster/boss-general-monster/83dragon_fly.png",type:"mini"},
+{name:"Mastering",map:"Floresta do Laberinto CA1",img:"https://ragnarokonline.gungho.jp/special/fankit/assets/img/monster/event/mob_jp_e_monster_145.png",type:"mini"},
+{name:"Angeling",map:"Portão Sul Prontera CA1",img:"https://ragnarokonline.gungho.jp/special/fankit/assets/img/monster/boss-general-monster/88angeling.png",type:"mini"},
+{name:"Deviling",map:"Portão Oeste Prontera CA1",img:"https://ragnarokonline.gungho.jp/special/fankit/assets/img/monster/boss-general-monster/509deviling.png",type:"mini"},
+{name:"Sapo-Cururu",map:"Templo Subaquático CA1",img:"../public/sapo-cururu.png",type:"mini"},
+{name:"Rei Dramoh",map:"Caverna Subaquática CA1",img:"https://ragnarokonline.gungho.jp/special/fankit/assets/img/monster/boss-general-monster/1060king_dramoh.png",type:"mini"},
+/* FUNÇÕES */
+{name:"Minério Concentrado (Esquerda)",map:"CA1",img:"../public/pick.png",type:"function"},
+{name:"Minério Concentrado (Direita)",map:"CA1",img:"../public/pick.png",type:"function"},
+{name:"Evento Noite Dançante",map:"Prontera",img:"../public/party.png",type:"function"},
+]
+
+const grid=document.getElementById("grid")
+
+function getFilteredBosses(){
+if(currentFilter === "all") return bosses
+return bosses.filter(b => b.type === currentFilter)
+}
+
+
+function renderCards(){
+
+grid.innerHTML=""
+
+let sorted=[...getFilteredBosses()]
+
+
+sorted.sort((a,b)=>{
+
+let idA=bosses.indexOf(a)
+let idB=bosses.indexOf(b)
+
+let spawnedA=localStorage.getItem("spawned"+idA)
+let spawnedB=localStorage.getItem("spawned"+idB)
+
+if(spawnedA && !spawnedB) return -1
+if(!spawnedA && spawnedB) return 1
+
+let spawnA=localStorage.getItem("spawn"+idA)
+let spawnB=localStorage.getItem("spawn"+idB)
+
+let remainA=spawnA?(spawnA-Date.now()):999999999
+let remainB=spawnB?(spawnB-Date.now()):999999999
+
+return remainA-remainB
+
+})
+
+let start=(currentPage-1)*cardsPerPage
+let end=start+cardsPerPage
+
+let pageBosses=sorted.slice(start,end)
+
+pageBosses.forEach((boss)=>{
+
+let realIndex=bosses.indexOf(boss)
+
+grid.innerHTML+=`
+
+<div class="card ${boss.type === 'function' ? 'functionCard' : ''} 
+${localStorage.getItem("spawned"+realIndex) ? "spawned spawnGlow" : ""}"
+
+data-name="${boss.name.toLowerCase()}" 
+id="card${realIndex}">
+
+<img src="${boss.img}">
+
+<div class="badge ${boss.type}">
+  ${boss.type.toUpperCase()}
+</div>
+
+<div class="info">
+
+<div class="name">${boss.name}</div>
+<div class="map">${boss.map}</div>
+
+<div class="timer">⏰</div>
+
+<div class="timeBox">
+
+  <div class="timeInputs">
+    <div class="inputGroup">
+      <span>Horas</span>
+      <input type="number" class="h" min="0">
+    </div>
+
+    <div class="inputGroup">
+      <span>Minutos</span>
+      <input type="number" class="m" min="0">
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn startBtn" onclick="start(${realIndex})">▶Start</button>
+    <button class="btn resetBtn" onclick="resetTimer(${realIndex})">⛔Reset</button>
+  </div>
+
+</div>
+
+`
+
+})
+
+updatePageInfo(sorted.length)
+
+}
+
+function updatePageInfo(total){
+
+let totalPages=Math.ceil(total/cardsPerPage)
+
+document.getElementById("pageInfo").innerText="Página "+currentPage+" / "+totalPages
+
+}
+
+function nextPage(){currentPage++;renderCards()}
+function prevPage(){if(currentPage>1){currentPage--;renderCards()}}
+
+function start(id){
+
+let card=document.getElementById("card"+id)
+
+let h=card.querySelector(".h").value||0
+let m=card.querySelector(".m").value||0
+
+let total=(h*3600)+(m*60)
+
+let spawn=Date.now()+total*1000
+
+localStorage.setItem("spawn"+id,spawn)
+
+renderCards()
+
+}
+
+function resetTimer(id){
+
+localStorage.removeItem("spawn"+id)
+localStorage.removeItem("spawned"+id)
+localStorage.removeItem("discordSent"+id) // 🔥 NOVO
+
+renderCards()
+
+}
+
+
+function update(){
+
+document.querySelectorAll(".card").forEach(card=>{
+
+let id=card.id.replace("card","")
+
+let spawn=parseInt(localStorage.getItem("spawn"+id))
+
+
+if(!spawn) return
+
+let timer=card.querySelector(".timer")
+
+let remain=(spawn-Date.now())/1000
+
+if(remain<=0 && !localStorage.getItem("spawned"+id)){
+
+let boss = bosses[id]
+
+// 🔥 ENVIA PRO DISCORD (1x só)
+if(!localStorage.getItem("discordSent"+id)){
+  enviarDiscord(boss)
+  localStorage.setItem("discordSent"+id,true)
+}
+
+
+timer.innerText="SPAWN"
+
+card.classList.add("spawnGlow")
+card.classList.add("spawned")
+
+
+localStorage.setItem("spawned"+id,true)
+
+alarm.volume = 1
+alarm.currentTime = 0
+
+setTimeout(() => {
+  alarm.currentTime = 0
+  alarm.play().catch(()=>{})
+alarm.pause()
+alarm.currentTime = 0
+
+setTimeout(() => {
+  alarm.play().catch(()=>{})
+
+  setTimeout(() => {
+    alarm.pause()
+    alarm.currentTime = 0
+  }, 5000)
+
+}, 100)
+
+  // 🔥 PARA AUTOMATICAMENTE DEPOIS DE 5s
+  setTimeout(() => {
+    alarm.pause()
+    alarm.currentTime = 0
+  }, 5000)
+
+}, 100)
+
+
+
+
+if(Notification.permission==="granted"){
+
+let bossName=bosses[id].name
+
+let boss = bosses[id]
+
+new Notification("🔥 BOSS SPAWN!",{
+  body: boss.name + " nasceu em " + boss.map,
+  icon: boss.img,
+  requireInteraction:true
+})
+
+
+}
+
+localStorage.removeItem("spawn"+id)
+
+currentPage=1
+renderCards()
+
+return
+
+}
+
+let h=Math.floor(remain/3600)
+let m=Math.floor((remain%3600)/60)
+let s=Math.floor(remain%60)
+
+timer.innerText=h+"h "+m+"m "+s+"s"
+
+})
+
+}
+
+setInterval(update,1000)
+
+function searchBoss(text){
+
+text=text.toLowerCase()
+
+document.querySelectorAll(".card").forEach(card=>{
+
+let name=card.dataset.name
+card.style.display=name.includes(text)?"block":"none"
+
+})
+
+}
+
+renderCards()
+
+</script>
+<link rel="stylesheet" href="/style.css">
+
+</body>
+</html>
